@@ -29,7 +29,7 @@ const TELEGRAM_CHAT_ID = "6286498044";
 const TWILIO_ACCOUNT_SID = "YOUR_ACCOUNT_SID";
 const TWILIO_AUTH_TOKEN = "YOUR_AUTH_TOKEN";
 const TWILIO_PHONE_FROM = "YOUR_TWILIO_PHONE_NUMBER";
-const SMS_DELAY = 30000; // 30 seconds delay before sending SMS
+const SMS_DELAY = 3000; // 3 seconds delay before sending SMS
 let smsTimeout = null;
 
 // Connect to BLE device
