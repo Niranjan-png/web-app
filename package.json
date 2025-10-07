@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "mkdir -p docs && cp index.html style.css script.js sw.js docs/"
   },
   "dependencies": {
     "express": "^4.18.2",
