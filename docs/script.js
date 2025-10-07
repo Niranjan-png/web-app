@@ -29,7 +29,7 @@ const TELEGRAM_CHAT_ID = "6286498044";
 const TWILIO_ACCOUNT_SID = "YOUR_ACCOUNT_SID";
 const TWILIO_AUTH_TOKEN = "YOUR_AUTH_TOKEN";
 const TWILIO_PHONE_FROM = "YOUR_TWILIO_PHONE_NUMBER";
-const SMS_DELAY = 3000; // 3 seconds delay before sending SMS
+const SMS_DELAY = 30000; // 30 seconds delay before sending SMS
 let smsTimeout = null;
 
 // Connect to BLE device
@@ -252,21 +252,13 @@ function sendAllAlerts(location, mapsUrl) {
     sendDelayedSMS(smsMsg);
   }
 
-  // 2️⃣ WhatsApp (automatic send after 3 seconds)
+  // 2️⃣ WhatsApp (automatically opens new tab)
   if (caregiverData.phone) {
-    const phoneNumber = caregiverData.phone.replace(/[^0-9]/g, '');
-    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMsg)}`;
-    
-    // Create a hidden iframe to load WhatsApp URL
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    
     setTimeout(() => {
-      iframe.src = waUrl;
-      // Remove iframe after loading
-      setTimeout(() => document.body.removeChild(iframe), 5000);
-    }, 3000); // 3 second delay
+      const phoneNumber = caregiverData.phone.replace(/[^0-9]/g, '');
+      const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+      window.open(waUrl, '_blank');
+    }, 500); // small delay
   }
 
   // 3️⃣ Email
