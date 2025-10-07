@@ -252,13 +252,21 @@ function sendAllAlerts(location, mapsUrl) {
     sendDelayedSMS(smsMsg);
   }
 
-  // 2️⃣ WhatsApp (automatically opens new tab)
+  // 2️⃣ WhatsApp (automatic send after 3 seconds)
   if (caregiverData.phone) {
+    const phoneNumber = caregiverData.phone.replace(/[^0-9]/g, '');
+    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+    
+    // Create a hidden iframe to load WhatsApp URL
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
     setTimeout(() => {
-      const phoneNumber = caregiverData.phone.replace(/[^0-9]/g, '');
-      const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMsg)}`;
-      window.open(waUrl, '_blank');
-    }, 500); // small delay
+      iframe.src = waUrl;
+      // Remove iframe after loading
+      setTimeout(() => document.body.removeChild(iframe), 5000);
+    }, 3000); // 3 second delay
   }
 
   // 3️⃣ Email
